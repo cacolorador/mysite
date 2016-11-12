@@ -140,5 +140,71 @@ function requestAnimFrame() {
 		<canvas id="processing-canvas" > </canvas> 
 	</div>	
 
+
+
+	<h3>Javascript Code</h3>	
+<div style="display:none; color:white; font-size:1px;" id="HtmlAreaEditor">[zipedit]</div><p><font face="'courier new', courier, monospace"></font></p><pre><font face="'courier new', courier, monospace">
+
+
+function sketchProc(processing) {
+
+
+
+	var w = 600;
+	var h = 600;
+	
+	var agent;
+	var terseHandler;
+	var circles;	
+	
+	var eventHandler;
+
+	processing.setup = function() {
+	
+		
+		
+		processing.size(w,h);			
+
+		terseHandler = new TerseHandler();	
+		
+		
+		agent = new MouseAgent(terseHandler, "my_mouse");
+		
+		
+		circles = new Array(50);
+		for (var i = 0; i < circles.length; i++)
+			circles[i] = new GrabbableCircle(agent,this);
+			
+		agent.setCircles(circles);
+			
+			
+		eventHandler = new JsEventHandler(processing.externals.canvas, agent, "mouseEvent");
+		
+		
+	};
+
+	processing.draw = function() {
+	
+	  
+
+		  processing.background(0);
+		  for (var i = 0; i < circles.length; i++){
+			if ( circles[i].grabsAgent(agent) )
+			  circles[i].draw(processing.color(255, 0, 0));
+			else
+			  circles[i].draw();
+		  }
+		  terseHandler.handle();
+		  
+		 
+	};
+  
+}
+
+
+
+</font></pre><p></p>
+	
+	
   </body>
 </html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  When updating your version of GWT, you should also update this DTD reference,
+  so that your app can take advantage of the latest GWT module capabilities.
+-->
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.6.0//EN"
+  "http://google-web-toolkit.googlecode.com/svn/tags/2.6.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to='p5proscene'>
+
+
+  <inherits name='com.google.gwt.user.User'/>
+
+  <inherits name='com.google.gwt.user.theme.clean.Clean'/>
+
+
+  <!-- Specify the app entry point class.                         -->
+  <entry-point class='main.client.P5proscene'/>
+
+
+	<inherits name="remixlab.proscene_tiny" />  
+
+
+	<inherits name='org.timepedia.exporter.Exporter'/>
+  	<set-property name="export" value="yes"/>
+  	
+	
+	<inherits name="com.gwtent.reflection.Reflection" />
+	
+	
+	
+	
+	
+    <source path='client'/>
+
+	<source path="eventjs" /> 
+
+	<source path='p5js'/>
+
+</module>
