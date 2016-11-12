@@ -122,5 +122,62 @@ function requestAnimFrame() {
 		<canvas id="processing-canvas" > </canvas> 
 	</div>	
 
+	
+	
+	
+
+	<a href="https://github.com/nakednous/remixcam_testing/tree/master/src/action_driven" target="_blank">Original example and code</a></p>	
+	<h3>Javascript Code</h3>	
+<div style="display:none; color:white; font-size:1px;" id="HtmlAreaEditor">[zipedit]</div><p><font face="'courier new', courier, monospace"></font></p><pre><font face="'courier new', courier, monospace">
+
+
+
+function sketchProc(processing) {
+
+
+
+
+	
+	var  adc;
+
+	processing.setup = function() {
+		
+		adc = new ActionDrivenCallback(this);
+		adc.setup();
+	};
+
+	processing.draw = function() {
+		
+
+		adc.draw();
+		
+
+
+
+		
+	};
+	
+	processing.mouseMoved = function() {
+		adc.mouseMoved();
+	};	
+	
+	processing.mouseDragged = function() {
+		adc.mouseDragged();
+	};
+
+	processing.mouseClicked = function() {
+		adc.mouseClicked();
+  
+	};	
+  
+}
+
+
+</font></pre><p></p>
+
+
+	
+	
+	
   </body>
 </html>
