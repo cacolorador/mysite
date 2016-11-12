@@ -1,0 +1,21 @@
+<html>
+  <!-- 1. Copy this to your webserver, along with the .pde's.
+       2. I've included a copy of the processing.js runtime.  Or change the following to point to yours if you want.
+       3. Access the page in your browser.  For example, say you copied the files to the root directory on your local webserver.
+          Then point your browser to:
+             http://localhost/dynamics_2013_01_08/index.html -->
+      
+  <head>
+    <script language=JavaScript src="processing-1.4.1.js" type=text/javascript></script>
+	                                       <script type="application/javascript">  
+                                        var gimeMillis2 = function () 
+                                          {  
+                                           var d = new Date();
+                                           return d.getTime();
+                                         };  
+                                        </script>   
+  </head>
+  <body>
+    <canvas id="sketch" data-processing-sources="pendulums.pde traer3.pde widgets.pde"></canvas>
+  </body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the     -->
+<!-- browser's rendering engine into                -->
+<!-- "Standards Mode". Replacing this declaration   -->
+<!-- with a "Quirks Mode" doctype is not supported. -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    <link type="text/css" rel="stylesheet" href="WebOcd.css">
+
+    <!--                                           -->
+    <!-- Any title is fine                         -->
+    <!--                                           -->
+    <title>Web Ocd</title>
+    
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
+    <script type="text/javascript" language="javascript" src="webocd/webocd.nocache.js"></script>
+	<script src="processing-1.4.1.js"></script>
+	<script type="text/javascript" src="webgl-utils.js"></script>
+	<script language='javascript'>
+	  function gwtOnLoad() {		
+		var canvas = document.getElementById("processing-canvas");
+		gl = WebGLUtils.setupWebGL(canvas);
+		if (!gl) {
+		  return;
+		}		  			
+		    var p = new Processing("processing-canvas", sketchProc);			
+	  }	 	 
+	</script> 
+<script  type="text/javascript">
+function sketchProc(processing) {	
+
+
+
+var lastCalledTime;
+var fps;
+
+function requestAnimFrame() {
+
+  if(!lastCalledTime) {
+     lastCalledTime = Date.now();
+     fps = 0;
+     return;
+  }
+  delta = (Date.now() - lastCalledTime)/1000;
+  lastCalledTime = Date.now();
+  fps = 1/delta;
+} 
+
+
+
+
+	
+	var camera1;
+  
+	processing.setup = function() {
+		processing.size(250,250,processing.P3D);									
+		camera1 = new Camera(this,100, -125, 150);
+	};
+
+	processing.draw = function() {
+	
+
+		
+		processing.background(204);
+		processing.lights();
+		camera1.feed();
+		processing.rotateY(processing.PI/3);
+		processing.box(50);
+		
+		
+			
+			 // show fps
+		requestAnimFrame();
+		processing.println(fps , 15, 30); 
+
+		
+		
+	};
+	  
+	processing.mouseMoved = function() {				
+		camera1.zoom(processing.radians(processing.mouseY - processing.pmouseY) / 2.0);
+	};		  
+  
+}	
+</script>
+  </head>
+
+  <!--                                           -->
+  <!-- The body can have arbitrary html, or      -->
+  <!-- you can leave the body empty if you want  -->
+  <!-- to create a completely dynamic UI.        -->
+  <!--                                           -->
+  <body>
+
+    <!-- OPTIONAL: include this if you want history support -->
+    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
+    
+    <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
+    <noscript>
+      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+      </div>
+    </noscript>
+
+    <h1>Web Ocd</h1>
+	<div style="text-align:center" >
+		<canvas id="processing-canvas" > </canvas> 
+	</div>	
+
+
+
+  </body>
+</html>

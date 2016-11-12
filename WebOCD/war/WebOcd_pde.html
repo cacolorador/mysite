@@ -1,0 +1,111 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the     -->
+<!-- browser's rendering engine into                -->
+<!-- "Standards Mode". Replacing this declaration   -->
+<!-- with a "Quirks Mode" doctype is not supported. -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    <link type="text/css" rel="stylesheet" href="WebOcd.css">
+
+    <!--                                           -->
+    <!-- Any title is fine                         -->
+    <!--                                           -->
+    <title>Web Ocd</title>
+    
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
+    <script type="text/javascript" language="javascript" src="webocd/webocd.nocache.js"></script>
+	<script src="processing-1.4.1.js"></script>
+	<script type="text/javascript" src="webgl-utils.js"></script>
+	<script language='javascript'>
+	  function gwtOnLoad() {		
+		var canvas = document.getElementById("processing-canvas");
+		gl = WebGLUtils.setupWebGL(canvas);
+		if (!gl) {
+		  return;
+		}
+
+	  
+		loadSketchFromSources ("processing-canvas",[ "zoom.pde"]) ;		
+	  }	 	 
+	  
+	  
+	  
+	  var loadSketchFromSources = function(canvas, sources) {
+		var code = [],
+		  errors = [],
+		  sourcesCount = sources.length,
+		  loaded = 0;
+
+		function ajaxAsync(url, callback) {
+		  var xhr = new XMLHttpRequest;
+		  xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4) {
+			  var error;
+			  if (xhr.status !== 200 && xhr.status !== 0) error = "Invalid XHR status " + xhr.status;
+			  else if (xhr.responseText === "") if ("withCredentials" in new XMLHttpRequest && (new XMLHttpRequest).withCredentials === false && window.location.protocol === "file:") error = "XMLHttpRequest failure, possibly due to a same-origin policy violation. You can try loading this page in another browser, or load it from http://localhost using a local webserver. See the Processing.js README for a more detailed explanation of this problem and solutions.";
+			  else error = "File is empty.";
+			  callback(xhr.responseText, error)
+			}
+		  };
+		  xhr.open("GET", url, true);
+		  if (xhr.overrideMimeType) xhr.overrideMimeType("application/json");
+		  xhr.setRequestHeader("If-Modified-Since", "Fri, 01 Jan 1960 00:00:00 GMT");
+		  xhr.send(null)
+		}
+		function loadBlock(index, filename) {
+		  function callback(block, error) {
+			code[index] = block;
+			++loaded;
+			if (error) errors.push(filename + " ==> " + error);
+			if (loaded === sourcesCount) if (errors.length === 0) try {
+			  return new Processing(canvas, code.join("\n"))
+			} catch(e) {
+			  throw "Processing.js: Unable to execute pjs sketch: " + e;
+			} else throw "Processing.js: Unable to load pjs sketch files: " + errors.join("\n");
+		  }
+		  ajaxAsync(filename, callback)
+		}
+		for (var i = 0; i < sourcesCount; ++i) loadBlock(i, sources[i])
+	  };	  	  
+	  	 	  
+	</script> 
+
+  </head>
+
+  <!--                                           -->
+  <!-- The body can have arbitrary html, or      -->
+  <!-- you can leave the body empty if you want  -->
+  <!-- to create a completely dynamic UI.        -->
+  <!--                                           -->
+  <body>
+
+    <!-- OPTIONAL: include this if you want history support -->
+    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
+    
+    <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
+    <noscript>
+      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+      </div>
+    </noscript>
+
+    <h1>Web Ocd</h1>
+	<div style="text-align:center" >
+		<canvas id="processing-canvas" > </canvas> 
+	</div>	
+
+
+
+  </body>
+</html>

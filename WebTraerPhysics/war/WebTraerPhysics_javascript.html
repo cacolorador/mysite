@@ -1,0 +1,172 @@
+
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the     -->
+<!-- browser's rendering engine into                -->
+<!-- "Standards Mode". Replacing this declaration   -->
+<!-- with a "Quirks Mode" doctype is not supported. -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    <link type="text/css" rel="stylesheet" href="WebTraerPhysics.css">
+
+    <!--                                           -->
+    <!-- Any title is fine                         -->
+    <!--                                           -->
+    <title>Web Application Starter Project</title>
+    
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
+    <script type="text/javascript" language="javascript" src="webtraerphysics/webtraerphysics.nocache.js"></script>
+		<script src="processing-1.4.1.js"></script>
+	<script type="text/javascript" src="webgl-utils.js"></script>
+	<script language='javascript'>
+          function gwtOnLoad() {    
+			try {
+		    var p = new Processing("processing-canvas", sketchProc);			
+			}catch(ex)
+			{
+			  alert(ex);
+			}
+	  }	 	 
+	</script> 
+	<script  type="text/javascript">
+	
+		function sketchProc(processing) {
+		
+		var physics;
+
+		var p;
+		var anchor;
+		var s;		
+		  
+			processing.setup = function() {
+				processing.size( 400, 400 );
+				processing.smooth();
+				processing.fill( 0 );
+				processing.ellipseMode( processing.CENTER );
+
+				physics =  new TraerPhysics.ParticleSystem( 1, 0.05 );
+				
+				p = physics.makeParticle( 1.0, processing.width/2, processing.height/2, 0 );
+				anchor = physics.makeParticle( 1.0, processing.width/2, processing.height/2, 0 );
+				anchor.makeFixed(); 
+				s = physics.makeSpring( p, anchor, 0.5, 0.1, 75 );
+
+			};
+			
+			processing.mousePressed = function() {
+				p.makeFixed(); 
+				p.position().set( processing.mouseX, processing.mouseY, 0 );
+			};
+
+			processing.mouseDragged = function() {
+				p.position().set( processing.mouseX, processing.mouseY, 0 );
+			};
+
+			processing.mouseReleased = function() {
+			   p.makeFree(); 
+			};			
+
+			processing.draw = function() {
+
+				physics.tick();
+
+				processing.background( 255 );
+
+				processing.line( p.position().x(), p.position().y(), anchor.position().x(), anchor.position().y() );
+				processing.ellipse( anchor.position().x(), anchor.position().y(), 5, 5 );
+				processing.ellipse( p.position().x(), p.position().y(), 20, 20 );
+			};
+	  
+		  
+		}	
+	</script>	
+  </head>
+
+  <!--                                           -->
+  <!-- The body can have arbitrary html, or      -->
+  <!-- you can leave the body empty if you want  -->
+  <!-- to create a completely dynamic UI.        -->
+  <!--                                           -->
+  <body>
+
+    <!-- OPTIONAL: include this if you want history support -->
+    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
+    
+    <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
+    <noscript>
+      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+      </div>
+    </noscript>
+
+    <h1>Web Traer Physics</h1>
+	<h2>Using Javascript and Processing</h2>
+	<div style="text-align:center" >
+		<canvas id="processing-canvas" > </canvas> 
+	</div>	
+	<a href="http://murderandcreate.com/physics/simple_pendulum/index.html" target="_blank">Original example and code</a></p>	
+	<h3>Javascript Code</h3>	
+<p><font face="'courier new', courier, monospace"></font></p><pre><font face="'courier new', courier, monospace">
+	
+		function sketchProc(processing) {
+		
+		var physics;
+
+		var p;
+		var anchor;
+		var s;		
+		  
+			processing.setup = function() {
+				processing.size( 400, 400 );
+				processing.smooth();
+				processing.fill( 0 );
+				processing.ellipseMode( processing.CENTER );
+
+				physics =  new TraerPhysics.ParticleSystem( 1, 0.05 );
+				
+				p = physics.makeParticle( 1.0, processing.width/2, processing.height/2, 0 );
+				anchor = physics.makeParticle( 1.0, processing.width/2, processing.height/2, 0 );
+				anchor.makeFixed(); 
+				s = physics.makeSpring( p, anchor, 0.5, 0.1, 75 );
+
+			};
+			
+			processing.mousePressed = function() {
+				p.makeFixed(); 
+				p.position().set( processing.mouseX, processing.mouseY, 0 );
+			};
+
+			processing.mouseDragged = function() {
+				p.position().set( processing.mouseX, processing.mouseY, 0 );
+			};
+
+			processing.mouseReleased = function() {
+			   p.makeFree(); 
+			};			
+
+			processing.draw = function() {
+
+				physics.tick();
+
+				processing.background( 255 );
+
+				processing.line( p.position().x(), p.position().y(), anchor.position().x(), anchor.position().y() );
+				processing.ellipse( anchor.position().x(), anchor.position().y(), 5, 5 );
+				processing.ellipse( p.position().x(), p.position().y(), 20, 20 );
+			};
+	  
+		  
+		}	
+</font></pre><p></p>
+  </body>
+</html>
